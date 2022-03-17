@@ -10,17 +10,17 @@ nodie('master')
     }
     stage('ContinuousDeployment')
     {
-        sh label: '', script: 'scp /home/ubuntu/.jenkins/workspace/ScriptedPipeline/webapp/target/webapp.war ubuntu@172.31.42.220:/var/lib/tomcat8/webapps/testenv.war'
+        sh label: '', script: 'scp /home/ubuntu/.jenkins/workspace/DeclarativePipeline/webapp/target/webapp.war ubuntu@172.31.42.220:/var/lib/tomcat8/webapps/testenv.war'
     }
     stage('ContinuousTesting')
     {
         git 'https://github.com/selenium-saikrishna/FunctionalTesting.git'
-        sh label: '', script: 'java -jar /home/ubuntu/.jenkins/workspace/ScriptedPipeline/testing.jar'
+        sh label: '', script: 'java -jar /home/ubuntu/.jenkins/workspace/DeclarativePipeline/testing.jar'
     }
      stage('ContinuousDelivery')
     {
         input message: 'Waiting for Approval from the DM', submitter: 'sri'
-        sh label: '', script: 'scp /home/ubuntu/.jenkins/workspace/ScriptedPipeline/webapp/target/webapp.war ubuntu@172.31.43.12:/var/lib/tomcat8/webapps/prodenv.war'
+        sh label: '', script: 'scp /home/ubuntu/.jenkins/workspace/DeclarativePipeline/webapp/target/webapp.war ubuntu@172.31.43.12:/var/lib/tomcat8/webapps/prodenv.war'
     }
     
     
